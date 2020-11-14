@@ -1,0 +1,10 @@
+/*******************************
+ * Andrew Dillon
+ * 2382400
+ * CPSC 350
+ * Assignment 04
+ *******************************/
+
+Overloading << operator
+https://docs.microsoft.com/en-us/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=msvc-160
+https://stackoverflow.com/questions/10744787/operator-must-take-exactly-one-argument
