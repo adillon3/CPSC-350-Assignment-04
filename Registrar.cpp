@@ -61,7 +61,7 @@
          studentWaitTimes.InsertBack(currentTime - temp.GetArrivalTime());
 
          cerr << "\n + ADDING: " << (currentTime - temp.GetArrivalTime()) << "++++++++++++++++++++++++++++++++++++++++\n";
-         cerr << "SIZE: " << studentWaitTimes.GetSize() << endl;
+         cerr << "()()()()()()()()()()()()()()()()()()()()studentWaitTimes.GetSize(): " << studentWaitTimes.GetSize() << endl;
          studentWaitTimes.DisplayForwards(oFile);
          cerr << endl;
 

@@ -45,6 +45,8 @@ public:
 
       //adding the value
       head -> data = newValue;
+
+
       ++size;
     }
   }
@@ -66,6 +68,7 @@ public:
       //adding new value
       tail -> data = newValue;
       ++size;
+      cerr << "SIZE ====----------------================:"  << size << endl;
     }
   }
   x DeleteBack()
@@ -233,6 +236,7 @@ public:
   }
   bool GetSize()
   {
+    cerr << "SIZE IN GET SIZE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: "  << size << endl;
     return size;
   }
   x GetValueAtIndex(int index)
