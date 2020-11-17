@@ -22,6 +22,13 @@
    waitTime = 0;
  }
 
+ Student :: Student(int newArrivalTime, int newWindowTime, int newWaitTime)
+ {
+   arrivalTime = newArrivalTime;
+   windowTime = newWindowTime;
+   waitTime = newWaitTime;
+ }
+
  int Student :: GetWindowTime()
  {
    return windowTime;

@@ -49,11 +49,14 @@ public:
 
 
 private:
-  GenQueue<Student*> studentQueue;
+  void UpdateWindowIdleTimes();
+
+  GenQueue<Student> studentQueue;
   Window* windowArray;
   int numWindows;
 
   LinkedListInterface<int> studentWaitTimes;
+  LinkedListInterface<int> windowIdleTimes;
  };
 
  #endif // REGISTRAR_H_

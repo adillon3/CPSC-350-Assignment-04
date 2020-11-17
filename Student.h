@@ -22,6 +22,7 @@ public:
   //constructors
   Student();
   Student(int newArrivalTime, int newWindowTime);
+  Student(int newArrivalTime, int newWindowTime, int newWaitTime);
 
   int GetWindowTime();
   int GetWaitTime();

@@ -27,11 +27,12 @@ int main(int argc, char* argv[])
   CheckFileNameValid(fileName);
 
 
-  myRegistrar.ProcessFile(fileName);
-  //myRegistrar.RunSimulation(fileName, cout);
+  cout << "* REGISTRAR SIMULATION *\n\n";
+  myRegistrar.RunSimulation(fileName, cout);
 
 
-  cout << "\n\nEND\n\n";
+
+  cout << "\n\nThank you for using my program!\n\n";
 
 
   return 0;

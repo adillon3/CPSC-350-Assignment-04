@@ -180,15 +180,14 @@ public:
 
   void DisplayForwards(ostream& oFile)
   {
-    if(size < 0)
+    oFile << "Forwards: ";
+    if(size <= 0)
     {
       oFile << "List is Empty";
     }
     else
     {
       DoublyLinkedListNode<x>* temp = head;
-
-      oFile << "Forwards: ";
 
       while(temp != tail)
       {
@@ -202,6 +201,8 @@ public:
   }
   void DisplayBackwards(ostream& oFile)
   {
+    oFile << "Backwards: ";
+
     if(size < 0)
     {
       oFile << "List is Empty";
@@ -209,8 +210,6 @@ public:
     else
     {
       DoublyLinkedListNode<x>* temp = tail;
-
-      oFile << "Backwards: ";
 
       while(temp -> prev != nullptr)
       {
@@ -264,9 +263,13 @@ private:
   x DeleteOnlyNode()
   {
     x returnVal = head -> data;
+
     delete head;
     head = nullptr;
     tail = nullptr;
+    --size;
+
+    return returnVal;
   }
 
   DoublyLinkedListNode<x>* head;

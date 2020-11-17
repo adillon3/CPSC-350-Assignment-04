@@ -17,13 +17,18 @@ public:
   Window();
   ~Window();
 
-  void SetStudent(Student* newStudent);
-  Student* RemoveStudentIfDone();
+  void SetStudent(Student newStudent);
+  bool RemoveStudentIfDone();
 
   void DecrementStudentWindowTime();
   bool IsIdle();
+
+  int UpdateWindowIdleTime();
+
 private:
   Student* student;
+  int idleTimeCounter;
+  int longestIdleTime;
  };
 
  #endif // WINDOW_H_

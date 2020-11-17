@@ -10,6 +10,8 @@
 Window :: Window()
 {
   student = nullptr;
+  idleTimeCounter = 0;
+  longestIdleTime = 0;
 }
 
 Window :: ~Window()
@@ -17,23 +19,23 @@ Window :: ~Window()
   student = nullptr;
 }
 
-void Window :: SetStudent(Student* newStudent)
+void Window :: SetStudent(Student newStudent)
 {
-  student = newStudent;
+  //delete student;
+  student = new Student(newStudent.GetArrivalTime(), newStudent.GetWindowTime(), newStudent.GetWaitTime());
 }
-Student* Window :: RemoveStudentIfDone()
+bool Window :: RemoveStudentIfDone()
 {
   if(student != nullptr)
   {
     if(student -> GetWindowTime() <= 0)
     {
-      Student* temp = student;
       student = nullptr;
-      return temp;
+      return true;
     }
   }
 
-  return nullptr;
+  return false;
 }
 
 
@@ -51,4 +53,16 @@ bool Window :: IsIdle()
   }
 
   return false;
+}
+
+int Window :: UpdateWindowIdleTime()
+{
+  if(IsIdle())
+  {
+    ++idleTimeCounter;
+  }
+  else
+  {
+    idleTimeCounter = 0;
+  }
 }
