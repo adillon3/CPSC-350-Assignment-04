@@ -12,57 +12,44 @@
  {
    arrivalTime = 0;
    windowTime = 0;
-   waitTime = 0;
  }
-
  Student :: Student(int newArrivalTime, int newWindowTime)
  {
    arrivalTime = newArrivalTime;
    windowTime = newWindowTime;
-   waitTime = 0;
  }
-
  Student :: Student(int newArrivalTime, int newWindowTime, int newWaitTime)
  {
    arrivalTime = newArrivalTime;
    windowTime = newWindowTime;
-   waitTime = newWaitTime;
  }
+
 
  int Student :: GetWindowTime()
  {
    return windowTime;
  }
- int Student :: GetWaitTime()
- {
-   return waitTime;
- }
  int Student :: GetArrivalTime()
  {
    return arrivalTime;
  }
- void Student :: SetWindowTime(int newWindowTime)
- {
-   windowTime = newWindowTime;
- }
-void Student :: SetWaitTime(int newWaitTime)
- {
-   waitTime = newWaitTime;
- }
- void Student :: SetArrivalTime(int newArrivalTime)
- {
-   arrivalTime = newArrivalTime;
- }
+
+  void Student :: DecrementWindowTime()
+  {
+    cerr << "Decrementing Student Window Time: " << windowTime << endl;
+    --windowTime;
+  }
+
+ /*
+ void SetWindowTime(int newWindowTime);
+ void SetArrivalTime(int arrivalTime);
+ void IncrementWaitTime();
 
 
- void Student :: IncrementWaitTime()
- {
-   ++waitTime;
- }
- void Student :: DecrementWindowTime()
- {
-   --windowTime;
- }
+ //overloaded operators
+ friend ostream& operator<<(ostream& oFile, const Student& object);
+
+ */
 
 
 

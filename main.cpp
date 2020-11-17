@@ -1,4 +1,4 @@
-/*******************************
+  /*******************************
  * Andrew Dillon
  * 2382400
  * CPSC 350
@@ -12,7 +12,6 @@
 int main(int argc, char* argv[])
 {
   string fileName;
-  Registrar myRegistrar;
 
   //Getting input if commandline is blank
   if(argc < 2)
@@ -26,11 +25,10 @@ int main(int argc, char* argv[])
 
   CheckFileNameValid(fileName);
 
-
+  Registrar myRegistrar;
   cout << "* REGISTRAR SIMULATION *\n\n";
+
   myRegistrar.RunSimulation(fileName, cout);
-
-
 
   cout << "\n\nThank you for using my program!\n\n";
 

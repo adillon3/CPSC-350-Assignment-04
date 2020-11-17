@@ -21,15 +21,16 @@
 public:
   //Constructors
   Registrar();
-  Registrar(int numWindows);
   ~Registrar();
 
-
+  //Core Methods
   void RunSimulation(string fileName, ostream& oFile);
   void ProcessFile(string fileName);
   void SetWindows(int numWindows);
-  void DecrementAllStudentWindowTimes();
+  void UpdateStudentWindowTimes();
+  void UpdateWindowIdleTimes();
   int  FindNextEmptyWindow();
+  void RemoveStudentsFromWindows();
 
   //Stats functions
   //  Print Stats Functions
@@ -49,7 +50,7 @@ public:
 
 
 private:
-  void UpdateWindowIdleTimes();
+  void MakeIdleList();
 
   GenQueue<Student> studentQueue;
   Window* windowArray;

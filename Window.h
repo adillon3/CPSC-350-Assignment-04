@@ -18,7 +18,8 @@ public:
   ~Window();
 
   void SetStudent(Student newStudent);
-  bool RemoveStudentIfDone();
+  void RemoveStudentIfDone();
+  int GetIdleTimeCounter();
 
   void DecrementStudentWindowTime();
   bool IsIdle();
@@ -28,7 +29,6 @@ public:
 private:
   Student* student;
   int idleTimeCounter;
-  int longestIdleTime;
  };
 
  #endif // WINDOW_H_

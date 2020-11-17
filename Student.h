@@ -39,7 +39,6 @@ public:
 private:
   int arrivalTime;
   int windowTime;
-  int waitTime;
  };
 
  #endif // STUDENT_H_

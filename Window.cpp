@@ -7,42 +7,20 @@
 
 #include "Window.h"
 
+
 Window :: Window()
 {
   student = nullptr;
   idleTimeCounter = 0;
-  longestIdleTime = 0;
 }
-
 Window :: ~Window()
 {
-  student = nullptr;
+  delete student;
 }
 
 void Window :: SetStudent(Student newStudent)
 {
-  //delete student;
-  student = new Student(newStudent.GetArrivalTime(), newStudent.GetWindowTime(), newStudent.GetWaitTime());
-}
-bool Window :: RemoveStudentIfDone()
-{
-  if(student != nullptr)
-  {
-    if(student -> GetWindowTime() <= 0)
-    {
-      student = nullptr;
-      return true;
-    }
-  }
-
-  return false;
-}
-
-
-
-void Window :: DecrementStudentWindowTime()
-{
-  student -> DecrementWindowTime();
+  student = new Student(newStudent.GetArrivalTime(), newStudent.GetWindowTime());
 }
 
 bool Window :: IsIdle()
@@ -51,18 +29,54 @@ bool Window :: IsIdle()
   {
     return true;
   }
-
-  return false;
+  else
+  {
+    return false;
+  }
 }
 
-int Window :: UpdateWindowIdleTime()
+int Window:: UpdateWindowIdleTime()
 {
   if(IsIdle())
   {
     ++idleTimeCounter;
   }
+}
+int Window:: GetIdleTimeCounter()
+{
+  return idleTimeCounter;
+}
+void Window:: RemoveStudentIfDone()
+{
+  if(student == nullptr)
+  {
+    return;
+  }
   else
   {
-    idleTimeCounter = 0;
+    if(student -> GetWindowTime() == 0)
+    {
+      delete student;
+      student = nullptr;
+    }
   }
 }
+
+void Window :: DecrementStudentWindowTime()
+{
+  if(student == nullptr)
+  {
+    return;
+  }
+  else
+  {
+    student -> DecrementWindowTime();
+  }
+}
+/*int  GetIdleTimeCounter();
+
+
+
+bool IsIdle();
+
+*/

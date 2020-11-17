@@ -10,123 +10,172 @@
 /*****************************
  * Constructors & Destructors*
  *****************************/
-Registrar :: Registrar()
-{
-  windowArray = nullptr;
-  numWindows = 0;
-}
-Registrar :: Registrar(int newNumWindows)
-{
-  SetWindows(numWindows);
-  numWindows = newNumWindows;
-}
-Registrar :: ~Registrar()
-{
-  delete[] windowArray;
-}
+ Registrar :: Registrar()
+ {
+   windowArray = nullptr;
+   numWindows = 0;
+ }
+ Registrar :: ~Registrar()
+ {
+   delete[] windowArray;
+ }
 
-/*********************
- * Primary Functions *
- *********************/
-void Registrar :: RunSimulation(string fileName, ostream& oFile)
-{
-  oFile << "Processing File: " << fileName << endl << endl;
 
-  ProcessFile(fileName);
-  Student temp;
-  int currentTime = 0;
-  //number of windows in array, numbered 1 to numWindows
-  int availableWindows = numWindows;
+ /***************
+  * Core Methods*
+  ***************/
+ void Registrar :: RunSimulation(string fileName, ostream& oFile)
+ {
+   ProcessFile(fileName);
 
-  while(!studentQueue.IsEmpty())
-  {
+   Student temp;
 
-    while(!studentQueue.IsEmpty() && studentQueue.Peek().GetArrivalTime() <= currentTime /*&$ OPEN Window*/)
-    {
+   int currentTime = 0;
 
-      temp = studentQueue.Dequeue();
+   while(!studentQueue.IsEmpty())
+   {
+     string myString;
+     //getline(cin, myString);
 
-      studentWaitTimes.InsertBack(temp.GetWaitTime());
+     cerr << "while(!studentQueue.IsEmpty())\n";
+     cerr << "==========================CURRENT TIME: " << currentTime << endl;
+     studentQueue.PrintQueue(oFile);
 
-      //from 0 to less that number of windows
-      int nextWindow = FindNextEmptyWindow();
 
-      windowArray[nextWindow].SetStudent(temp);
-    }
+     RemoveStudentsFromWindows();
 
-    ++currentTime;
-  }
+     while(!studentQueue.IsEmpty() && studentQueue.Peek().GetArrivalTime()  <= currentTime)
+     {
+       cerr << " while(!studentQueue.IsEmpty() && studentQueue.Peek().GetArrivalTime()  <= currentTime)\n";
+       studentQueue.PrintQueue(oFile);
 
-  cout << endl;
-  FindAndPrintStats(oFile);
-}//END void Registrar :: RunSimulation(string fileName, ostream& oFile)
+       int nextWindow = FindNextEmptyWindow();
+       cerr << " NEXT WINDOW: " << nextWindow << endl;
 
+       if(nextWindow != -1)
+       {
+         //Removing student from Queue
+         temp = studentQueue.Dequeue();
+
+         //finding student wait time (current time - student arrival time)
+         studentWaitTimes.InsertBack(currentTime - temp.GetArrivalTime());
+
+         cerr << "\n + ADDING: " << (currentTime - temp.GetArrivalTime()) << "++++++++++++++++++++++++++++++++++++++++\n";
+         cerr << "SIZE: " << studentWaitTimes.GetSize() << endl;
+         studentWaitTimes.DisplayForwards(oFile);
+         cerr << endl;
+
+         //Adding student to window
+         windowArray[nextWindow].SetStudent(temp);
+       }
+       else
+       {
+         break;
+       }
+       studentQueue.PrintQueue(oFile);
+     }
+
+
+     //updating times
+     ++currentTime;
+     UpdateWindowIdleTimes();
+     UpdateStudentWindowTimes();
+   }//while(!studentQueue.IsEmpty())
+
+
+   MakeIdleList();
+
+
+
+   FindAndPrintStats(oFile);
+ }
 
 
 
 void Registrar :: ProcessFile(string fileName)
 {
-  int numWindows;
-  ifstream inFile;
-  inFile.open(fileName.c_str());
-
-  inFile >> numWindows;
-  if(inFile.fail())
-  {
-    inFile.clear();
-    inFile.ignore(100000000, '\n');
-    cout << "Sorry, file contains non numeric input.\n";
-  }
-
-  SetWindows(numWindows);
-
-  int currentTime;
-  int numStudentsAtTime;
-  int studentWindowTime;
+ int arrivalTime;
+ int numStudentsAtTime;
+ int studentWindowTime;
 
 
-  while(true)
-  {
-    //Getting student arrival time
-    inFile >> currentTime;
-    if(inFile.eof())
-    {
-      break;
-    }
-    if(inFile.fail())
-    {
-      inFile.clear();
-      inFile.ignore(100000000, '\n');
-      cout << "Sorry, file contains non numeric input.\n";
-    }
+ ifstream inFile;
+ inFile.open(fileName.c_str());
 
-    //getting number of studnts to arrive
-    inFile >> numStudentsAtTime;
-    if(inFile.fail())
-    {
-      inFile.clear();
-      inFile.ignore(100000000, '\n');
-      cout << "Sorry, file contains non numeric input.\n";
-    }
+ inFile >> numWindows;
+ if(inFile.fail())
+ {
+   inFile.clear();
+   inFile.ignore(100000000, '\n');
+   cout << "Sorry, file contains non numeric input.\n";
+ }
 
-    //getting amount of time each student will spend at the window
-    //  and adding them to the queue
-    for(int i = 0; i < numStudentsAtTime; ++i)
-    {
-      inFile >> studentWindowTime;
-      if(inFile.fail())
-      {
-        inFile.clear();
-        inFile.ignore(100000000, '\n');
-        cout << "Sorry, file contains non numeric input.\n";
-      }
+ SetWindows(numWindows);
 
-      studentQueue.Enqueue(Student(currentTime, studentWindowTime));
-    }
-  }//END while(!inFile.eof())
+ while(true)
+ {
+   //Getting student arrival time
+   inFile >> arrivalTime;
+   if(inFile.eof())
+   {
+     break;
+   }
+   if(inFile.fail())
+   {
+     inFile.clear();
+     inFile.ignore(100000000, '\n');
+     cout << "Sorry, file contains non numeric input.\n";
+   }
 
+   //getting number of studnts to arrive
+   inFile >> numStudentsAtTime;
+   if(inFile.fail())
+   {
+     inFile.clear();
+     inFile.ignore(100000000, '\n');
+     cout << "Sorry, file contains non numeric input.\n";
+   }
+
+   //getting amount of time each student will spend at the window
+   //  and adding them to the queue
+   for(int i = 0; i < numStudentsAtTime; ++i)
+   {
+     inFile >> studentWindowTime;
+     if(inFile.fail())
+     {
+       inFile.clear();
+       inFile.ignore(100000000, '\n');
+       cout << "Sorry, file contains non numeric input.\n";
+     }
+
+     studentQueue.Enqueue(Student(arrivalTime, studentWindowTime));
+   }//for(int i = 0; i < numStudentsAtTime; ++i)
+ }//END while(!inFile.eof())
+
+ inFile.close();
 }
-void Registrar :: SetWindows(int newNumWindows)
+int  Registrar :: FindNextEmptyWindow()
+{
+  cerr << " * Entering FindNextEmptyWindow()\n";
+
+  for(int i = 0; i < numWindows; ++i)
+  {
+    cerr << "for(int i = 0; i < numWindows; ++i)\n";
+    if(windowArray[i].IsIdle())
+    {
+      return i;
+    }
+  }
+  return -1;
+}
+void Registrar :: RemoveStudentsFromWindows()
+{
+  for(int i = 0; i < numWindows; ++i)
+  {
+    windowArray[i].RemoveStudentIfDone();
+  }
+}
+void Registrar :: SetWindows(int numWindows)
 {
   if(windowArray != nullptr)
   {
@@ -135,28 +184,27 @@ void Registrar :: SetWindows(int newNumWindows)
 
   windowArray = new Window[numWindows];
 
-  numWindows = newNumWindows;
 }
-void Registrar :: DecrementAllStudentWindowTimes()
+void Registrar :: UpdateStudentWindowTimes()
 {
   for(int i = 0; i < numWindows; ++i)
   {
-    windowArray[i].DecrementStudentWindowTime();
+    //If there is student a student at the window
+    if(!windowArray[i].IsIdle())
+    {
+      windowArray[i].DecrementStudentWindowTime();
+    }
   }
 }
-int Registrar :: FindNextEmptyWindow()
+void Registrar :: UpdateWindowIdleTimes()
 {
-  int emptyWindow = -1;
-
   for(int i = 0; i < numWindows; ++i)
   {
     if(windowArray[i].IsIdle())
     {
-      emptyWindow = i;
-      break;
+      windowArray[i].UpdateWindowIdleTime();
     }
   }
-  return emptyWindow;
 }
 
 
@@ -168,7 +216,7 @@ int Registrar :: FindNextEmptyWindow()
 void Registrar :: FindAndPrintStats(ostream& oFile)
 {
   FindAndPrintStudentStats(oFile);
-  //FindAndPrintWindowStats(oFile);
+  FindAndPrintWindowStats(oFile);
 }
 void Registrar :: FindAndPrintStudentStats(ostream& oFile)
 {
@@ -180,10 +228,10 @@ void Registrar :: FindAndPrintStudentStats(ostream& oFile)
 }
 void Registrar :: FindAndPrintWindowStats(ostream& oFile)
 {
-  oFile << "The Mean Window Idle Time:    " << MeanWindowIdleTime() << endl;
-  oFile << "The Longest Window Idle Time: " << LongestWindowIdleTime() << endl;
+  oFile << "The Mean Window Idle Time:     " << MeanWindowIdleTime() << endl;
+  oFile << "The Longest Window Idle Time:  " << LongestWindowIdleTime() << endl;
   oFile << "The Number of Windows" << endl;
-  oFile << "Idle For More Than 5 Minutes: " << NumWindowsOver5Minutes() << endl;
+  oFile << "Idle For More Than 5 Minutes:  " << NumWindowsOver5Minutes() << endl;
 }
 
 /*****************************
@@ -192,16 +240,22 @@ void Registrar :: FindAndPrintWindowStats(ostream& oFile)
  //student stat fucntions
 float Registrar :: CalcMeanStudentWait()
 {
+  cerr << "CalcMeanStudentWait()\n\n";
+
   //Does not include 0 wait times
   if(studentWaitTimes.GetSize() == 0)
   {
+    cerr << "No Wait Times";
     return 0;
   }
 
   int sum = 0;
 
+  cerr << "SIZE: " << studentWaitTimes.GetSize();
+
   for(int i = 0; i < studentWaitTimes.GetSize(); ++i)
   {
+    cerr << "for(int i = 0; i < studentWaitTimes.GetSize(); ++i)\n";
     if(studentWaitTimes.GetValueAtIndex(i) != 0)
     {
       sum += studentWaitTimes.GetValueAtIndex(i);
@@ -259,14 +313,18 @@ int Registrar :: MeanWindowIdleTime()
 {
   if(windowIdleTimes.GetSize() == 0)
   {
+    cerr << "SIZE = 0 \n\n";
     return 0;
   }
 
   int sum = 0;
 
-  for(int i = 0; i < windowIdleTimes.GetSize(); ++i)
+  for(int i = 0; i < numWindows; ++i)
   {
-    sum += windowIdleTimes.GetValueAtIndex(i);
+    if(windowIdleTimes.GetValueAtIndex(i) >= 0)
+    {
+      sum += windowIdleTimes.GetValueAtIndex(i);
+    }
   }
 
   return (float)sum / windowIdleTimes.GetSize();
@@ -310,11 +368,13 @@ int Registrar :: NumWindowsOver5Minutes()
   return numWindowsOver5;
 }
 
-
-void Registrar :: UpdateWindowIdleTimes()
+/**************************
+ * Private/Helper Methods *
+ **************************/
+void Registrar :: MakeIdleList()
 {
   for(int i = 0; i < numWindows; ++i)
   {
-    windowArray[i].UpdateWindowIdleTime();
+    windowIdleTimes.InsertBack(windowArray[i].GetIdleTimeCounter());
   }
 }
