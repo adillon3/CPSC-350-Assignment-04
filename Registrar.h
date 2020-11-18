@@ -40,18 +40,21 @@ public:
   //  Calc Stat functions
   //    student stats
   float CalcMeanStudentWait();
-  float CalcMedianStudentWait();
+  int   CalcMedianStudentWait();
   int   LongestStudentWait();
   int   NumStudentsOver10Minutes();
   //    window stats
-  int   MeanWindowIdleTime();
+  float MeanWindowIdleTime();
   int   LongestWindowIdleTime();
   int   NumWindowsOver5Minutes();
 
 
+
+
+
 private:
   void MakeIdleList();
-
+  
   GenQueue<Student> studentQueue;
   Window* windowArray;
   int numWindows;

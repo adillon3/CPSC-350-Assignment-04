@@ -264,16 +264,23 @@ float Registrar :: CalcMeanStudentWait()
 
   return (float)sum / studentWaitTimes.GetSize();
 }
-float Registrar :: CalcMedianStudentWait()
+int Registrar :: CalcMedianStudentWait()
 {
   //number is even
   if(studentWaitTimes.GetSize() % 2 == 0)
   {
-    int sum = studentWaitTimes.GetValueAtIndex((studentWaitTimes.GetSize() / 2));
-    sum += studentWaitTimes.GetValueAtIndex((studentWaitTimes.GetSize() / 2) -1 );
+    int mid1 = studentWaitTimes.GetValueAtIndex((studentWaitTimes.GetSize() / 2));
+    int mid2 = studentWaitTimes.GetValueAtIndex((studentWaitTimes.GetSize() / 2) - 1);
 
-    return sum / 2.0;
-  }
+    if(mid1 < mid2)
+    {
+      return mid1;
+    }
+    else
+    {
+      return mid2;
+    }
+  }//if(studentWaitTimes.GetSize() % 2 == 0)
   //number is odd
   else
   {
@@ -309,7 +316,7 @@ int Registrar :: NumStudentsOver10Minutes()
   return numOver10;
 }
 //window stat functions
-int Registrar :: MeanWindowIdleTime()
+float Registrar :: MeanWindowIdleTime()
 {
   if(windowIdleTimes.GetSize() == 0)
   {

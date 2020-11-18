@@ -13,6 +13,11 @@ int main(int argc, char* argv[])
 {
   string fileName;
 
+  cout << "\nWelcome to the...\n\n";
+  cout << "************************\n";
+  cout << "* REGISTRAR SIMULATION *\n";
+  cout << "************************\n\n\n";
+
   //Getting input if commandline is blank
   if(argc < 2)
   {
@@ -26,7 +31,7 @@ int main(int argc, char* argv[])
   CheckFileNameValid(fileName);
 
   Registrar myRegistrar;
-  cout << "* REGISTRAR SIMULATION *\n\n";
+
 
   myRegistrar.RunSimulation(fileName, cout);
 
