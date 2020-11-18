@@ -8,7 +8,7 @@
  #ifndef DOUBLYLINKEDLISTNODE_H_
  #define DOUBLYLINKEDLISTNODE_H_
 
-#include "Student.h"
+//#include "Student.h"
 
 #include <iostream>
 using namespace std;

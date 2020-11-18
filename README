@@ -5,6 +5,13 @@
  * Assignment 04
  *******************************/
 
+I am using one of my "late's" on this assignment
+
+
 Overloading << operator
 https://docs.microsoft.com/en-us/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=msvc-160
 https://stackoverflow.com/questions/10744787/operator-must-take-exactly-one-argument
+
+
+Fixing inheritance error
+https://stackoverflow.com/questions/5693954/c-error-expected-class-name-before-token-when-inheriting-a-template-cl

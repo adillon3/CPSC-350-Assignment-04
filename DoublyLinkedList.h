@@ -8,10 +8,11 @@
  #ifndef DOUBLYLINKEDLIST_H_
  #define DOUBLYLINKEDLIST_H_
 
-#include "DoublyLinkedListNode.h"
+//#include "DoublyLinkedListNode.h"
+#include "LinkedListInterface.h"
 
 template <class x>
-class DoublyLinkedList
+class DoublyLinkedList /*: public LinkedListInterface<x>*/
 {
 public:
   //constructors and destructors

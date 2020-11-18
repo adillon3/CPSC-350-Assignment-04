@@ -8,7 +8,8 @@
  #ifndef GENQUEUE_H_
  #define GENQUEUE_H_
 
- #include "LinkedListInterface.h"
+ //#include "LinkedListInterface.h"
+ #include "DoublyLinkedList.h"
 
  template <class x>
  class GenQueue
@@ -53,7 +54,7 @@
    }
 
  private:
-   LinkedListInterface<x> queue;
+   DoublyLinkedList<x> queue;
  };
 
  #endif // GENQUEUE_H_

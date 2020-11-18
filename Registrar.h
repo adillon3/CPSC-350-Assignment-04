@@ -56,8 +56,8 @@ private:
   Window* windowArray;
   int numWindows;
 
-  LinkedListInterface<int> studentWaitTimes;
-  LinkedListInterface<int> windowIdleTimes;
+  DoublyLinkedList<int> studentWaitTimes;
+  DoublyLinkedList<int> windowIdleTimes;
  };
 
  #endif // REGISTRAR_H_
