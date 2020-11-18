@@ -35,6 +35,9 @@ public:
 
   //overloaded operators
   friend ostream& operator<<(ostream& oFile, const Student& object);
+  friend bool operator==(const Student& student1, const Student& student2);
+  friend bool operator!=(const Student& student1, const Student& student2);
+
 
 private:
   int arrivalTime;

@@ -12,7 +12,7 @@
 #include "LinkedListInterface.h"
 
 template <class x>
-class DoublyLinkedList /*: public LinkedListInterface<x>*/
+class DoublyLinkedList : public LinkedListInterface<x>
 {
 public:
   //constructors and destructors

@@ -59,3 +59,12 @@
     oFile << "Window time is    : " << student.windowTime << endl;
     oFile << endl;
  }
+
+ bool operator==(const Student& student1, const Student& student2)
+ {
+   return (student1.arrivalTime == student2.arrivalTime && student1.windowTime == student2.windowTime);
+ }
+ bool operator!=(const Student& student1, const Student& student2)
+ {
+   return (student1.arrivalTime != student2.arrivalTime || student1.windowTime != student2.windowTime);
+ }
