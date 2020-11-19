@@ -220,7 +220,7 @@ void Registrar :: FindAndPrintStats(ostream& oFile, int currentTime)
   oFile << "* Metrics *\n";
   oFile << "***********\n\n";
 
-  oFile << "Time Last Student Leaves:          " <<  currentTime << endl << endl;
+  oFile << "Time Last Student Finishes:        " <<  currentTime << endl << endl;
 
   FindAndPrintStudentStats(oFile);
   oFile << endl;

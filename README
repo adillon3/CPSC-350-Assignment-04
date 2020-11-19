@@ -10,6 +10,14 @@ I am using one of my "late's" on this assignment
 Window idle times are no longer counted once the queue is empty, as these
 employees could then leave.
 
+Added Features:
+Metrics output includes that which was specified in the Assignment Description,
+but also includes:
+-Total Time of Simulation
+-Number of Students
+-Number of Windows
+-Median of Window Idle Times
+
 Medians are calculated by finding middle value.  If there are two middle
 values (even data set), the smaller value is taken, as directed to in class
 on 11/17/2020.  Wait time and idle times of 0 are included when finding the
@@ -18,13 +26,7 @@ Means are computed only with values larger than 0.
 Only times that are more than 10 and 5 respectively counted, does not include
 times of 10 not 5
 
-Metrics output includes that which was specified in the Assignment Description,
-but also includes:
--Total Time of Simulation
--Number of Students
--Number of Windows
--Median of Window Idle Times
-
+Work Cited:
 Overloading operators
 https://docs.microsoft.com/en-us/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=msvc-160
 https://stackoverflow.com/questions/10744787/operator-must-take-exactly-one-argument
