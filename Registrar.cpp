@@ -25,6 +25,10 @@
   ***************/
  void Registrar :: RunSimulation(string fileName, ostream& oFile)
  {
+   oFile << "**********************\n";
+   oFile << "* Running Simulation *\n";
+   oFile << "**********************\n\n";
+
    oFile << "Processing " << fileName << "...\n\n";
 
    try
@@ -36,6 +40,8 @@
      oFile << myString;
      return;
    }
+
+   oFile << "Simulating Registrar...\n\n";
 
    Student temp;
 

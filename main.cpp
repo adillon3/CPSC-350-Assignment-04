@@ -15,11 +15,12 @@ int main(int argc, char* argv[])
 
   string fileName;
 
-
   cout << "\nWelcome to the...\n\n";
-  cout << "************************\n";
-  cout << "* REGISTRAR SIMULATION *\n";
-  cout << "************************\n\n";
+  cout << "****************************\n";
+  cout << "*[]======================[]*\n";
+  cout << "*|| REGISTRAR SIMULATION ||*\n";
+  cout << "*[]======================[]*\n";
+  cout << "****************************\n\n";
 
   //Getting input if commandline is blank
   if(argc < 2)
@@ -31,22 +32,19 @@ int main(int argc, char* argv[])
     fileName = argv[1];
   }
 
-
-
   do
   {
     CheckFileNameValid(fileName);
 
-
-    //MOVE THIS TO TOP???
     Registrar myRegistrar;
-    myRegistrar.RunSimulation(fileName, cout);
 
+    myRegistrar.RunSimulation(fileName, cout);
 
     cout << endl << endl;
     if(GetYesOrNoInput(YES_NO_MESSAGE))
     {
       fileName = GetFileName();
+      cout << endl << endl;
     }
     else
     {
@@ -55,10 +53,7 @@ int main(int argc, char* argv[])
 
   } while(true);
 
-
-
   cout << "\n\nThank you for using my program!\n\n";
-
 
   return 0;
 }
