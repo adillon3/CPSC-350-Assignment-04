@@ -48,7 +48,7 @@ public:
   int   NumStudentsOver10Minutes();
   //    window stats
   float CalcMeanWindowIdle();
-  int   CalcMdeianWindowIdle();
+  int   CalcMedianWindowIdle();
   int   LongestWindowIdle();
   int   NumWindowsOver5Minutes();
 

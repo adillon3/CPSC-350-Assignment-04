@@ -7,6 +7,9 @@
 
 I am using one of my "late's" on this assignment
 
+Window idle times are no longer counted once the queue is empty, as these
+employees could then leave.
+
 Medians are calculated by finding middle value.  If there are two middle
 values (even data set), the smaller value is taken, as directed to in class
 on 11/17/2020.  Wait time and idle times of 0 are included when finding the

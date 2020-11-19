@@ -65,8 +65,12 @@
      if(!studentQueue.IsEmpty() ||  !AllWindowsAreIdle())
      {
        ++currentTime;
-       UpdateWindowIdleTimes();
        UpdateStudentWindowTimes();
+       if(!studentQueue.IsEmpty())
+       {
+         UpdateWindowIdleTimes();
+       }
+
      }
      else
      {
@@ -216,7 +220,7 @@ void Registrar :: FindAndPrintStats(ostream& oFile, int currentTime)
   oFile << "* Metrics *\n";
   oFile << "***********\n\n";
 
-  oFile << "Total Time to of Simulation:      " <<  currentTime << endl << endl;
+  oFile << "Time Last Student Leaves:          " <<  currentTime << endl << endl;
 
   FindAndPrintStudentStats(oFile);
   oFile << endl;
@@ -239,7 +243,7 @@ void Registrar :: FindAndPrintWindowStats(ostream& oFile)
 
   oFile << " - Number of Windows Simulated:    " << windowIdleTimes.GetSize() << endl;
   oFile << " - The Mean Window Idle Time:      " << CalcMeanWindowIdle() << endl;
-  oFile << " - Median Window Idle Time:        " << CalcMdeianWindowIdle() << endl;
+  oFile << " - Median Window Idle Time:        " << CalcMedianWindowIdle() << endl;
   oFile << " - The Longest Window Idle Time:   " << LongestWindowIdle() << endl;
   oFile << " - The Number of Windows" << endl;
   oFile << "   Idle For More Than 5 Minutes:   " << NumWindowsOver5Minutes() << endl;
@@ -258,16 +262,23 @@ float Registrar :: CalcMeanStudentWait()
   }
 
   int sum = 0;
+  int numberOfWaits = 0;
 
   for(int i = 0; i < studentWaitTimes.GetSize(); ++i)
   {
     if(studentWaitTimes.GetValueAtIndex(i) != 0)
     {
       sum += studentWaitTimes.GetValueAtIndex(i);
+      ++numberOfWaits;
     }
   }
 
-  return (float)sum / studentWaitTimes.GetSize();
+  if(numberOfWaits == 0)
+  {
+    return 0;
+  }
+
+  return (float)sum / numberOfWaits;
 }
 int Registrar :: CalcMedianStudentWait()
 {
@@ -329,18 +340,25 @@ float Registrar :: CalcMeanWindowIdle()
   }
 
   int sum = 0;
+  int numberOfWaits = 0;
 
   for(int i = 0; i < numWindows; ++i)
   {
     if(windowIdleTimes.GetValueAtIndex(i) >= 0)
     {
       sum += windowIdleTimes.GetValueAtIndex(i);
+      ++numberOfWaits;
     }
   }
 
-  return (float)sum / windowIdleTimes.GetSize();
+  if(numberOfWaits == 0)
+  {
+    return 0;
+  }
+
+  return (float)sum / numberOfWaits;
 }
-int Registrar :: CalcMdeianWindowIdle()
+int Registrar :: CalcMedianWindowIdle()
 {
   //number is even
   if(studentWaitTimes.GetSize() % 2 == 0)
