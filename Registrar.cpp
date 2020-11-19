@@ -282,7 +282,12 @@ float Registrar :: CalcMeanStudentWait()
 }
 int Registrar :: CalcMedianStudentWait()
 {
-  //number is even
+  //empty list
+  if(studentWaitTimes.IsEmpty())
+  {
+    return 0;
+  }
+  //number is even and non zero
   if(studentWaitTimes.GetSize() % 2 == 0)
   {
     int mid1 = studentWaitTimes.GetValueAtIndex((studentWaitTimes.GetSize() / 2));
@@ -360,9 +365,15 @@ float Registrar :: CalcMeanWindowIdle()
 }
 int Registrar :: CalcMedianWindowIdle()
 {
-  //number is even
-  if(studentWaitTimes.GetSize() % 2 == 0)
+  //empty list
+  if(windowIdleTimes.IsEmpty())
   {
+    return 0;
+  }
+  //number is even and non zero
+  else if(windowIdleTimes.GetSize() % 2 == 0)
+  {
+    //cerr << "finding
     int mid1 = windowIdleTimes.GetValueAtIndex((windowIdleTimes.GetSize() / 2));
     int mid2 = windowIdleTimes.GetValueAtIndex((windowIdleTimes.GetSize() / 2) - 1);
 
