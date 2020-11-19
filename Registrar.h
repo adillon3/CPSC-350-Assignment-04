@@ -26,15 +26,18 @@ public:
   //Core Methods
   void RunSimulation(string fileName, ostream& oFile);
   void ProcessFile(string fileName);
+  int  FindNextEmptyWindow();
+  void RemoveStudentsFromWindows();
+  bool AllWindowsAreIdle();
   void SetWindows(int numWindows);
   void UpdateStudentWindowTimes();
   void UpdateWindowIdleTimes();
-  int  FindNextEmptyWindow();
-  void RemoveStudentsFromWindows();
+
+
 
   //Stats functions
   //  Print Stats Functions
-  void FindAndPrintStats(ostream& oFile);
+  void FindAndPrintStats(ostream& oFile, int currentTime);
   void FindAndPrintStudentStats(ostream& oFile);
   void FindAndPrintWindowStats(ostream& oFile);
   //  Calc Stat functions
@@ -44,8 +47,9 @@ public:
   int   LongestStudentWait();
   int   NumStudentsOver10Minutes();
   //    window stats
-  float MeanWindowIdleTime();
-  int   LongestWindowIdleTime();
+  float CalcMeanWindowIdle();
+  int   CalcMdeianWindowIdle();
+  int   LongestWindowIdle();
   int   NumWindowsOver5Minutes();
 
 private:

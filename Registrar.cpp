@@ -32,7 +32,8 @@
 
    int currentTime = 0;
 
-   while(!studentQueue.IsEmpty())
+   //while there are students to process and or there are students at a window
+   while(true) //while(!studentQueue.IsEmpty() ||  !AllWindowsAreIdle())
    {
      string myString;
 
@@ -60,17 +61,25 @@
      }
 
 
-     //updating times
-     ++currentTime;
-     UpdateWindowIdleTimes();
-     UpdateStudentWindowTimes();
-   }//while(!studentQueue.IsEmpty())
+     //updating times if not the end of the loop
+     if(!studentQueue.IsEmpty() ||  !AllWindowsAreIdle())
+     {
+       ++currentTime;
+       UpdateWindowIdleTimes();
+       UpdateStudentWindowTimes();
+     }
+     else
+     {
+       break;
+     }
+
+   }//END while(true) //while(!studentQueue.IsEmpty() ||  !AllWindowsAreIdle())
+
 
    MakeIdleList();
 
-   FindAndPrintStats(oFile);
+   FindAndPrintStats(oFile, currentTime);
  }
-
 void Registrar :: ProcessFile(string fileName)
 {
  int arrivalTime;
@@ -151,6 +160,18 @@ void Registrar :: RemoveStudentsFromWindows()
     windowArray[i].RemoveStudentIfDone();
   }
 }
+bool Registrar :: AllWindowsAreIdle()
+{
+  for(int i = 0; i < numWindows; ++i)
+  {
+    if(!windowArray[i].IsIdle())
+    {
+      return false;
+    }
+  }
+
+  return true;
+}
 void Registrar :: SetWindows(int numWindows)
 {
   if(windowArray != nullptr)
@@ -189,11 +210,13 @@ void Registrar :: UpdateWindowIdleTimes()
 /******************************
  * Print Statistics Functions *
  ******************************/
-void Registrar :: FindAndPrintStats(ostream& oFile)
+void Registrar :: FindAndPrintStats(ostream& oFile, int currentTime)
 {
-  cout << "***********\n";
-  cout << "* Metrics *\n";
-  cout << "***********\n\n";
+  oFile << "***********\n";
+  oFile << "* Metrics *\n";
+  oFile << "***********\n\n";
+
+  oFile << "Total Time to of Simulation:      " <<  currentTime << endl << endl;
 
   FindAndPrintStudentStats(oFile);
   oFile << endl;
@@ -203,22 +226,23 @@ void Registrar :: FindAndPrintStudentStats(ostream& oFile)
 {
   oFile << "Student Metrics:\n";
 
-  oFile << " - Number of Students Simulated:  " << studentWaitTimes.GetSize() << endl;
-  oFile << " - The Mean Student Wait Time:    " << CalcMeanStudentWait() << endl;
-  oFile << " - The Median Student Wait Time:  " << CalcMedianStudentWait() << endl;
-  oFile << " - The Longest Student Wait Time: " << LongestStudentWait() << endl;
+  oFile << " - Number of Students Attended To: " << studentWaitTimes.GetSize() << endl;
+  oFile << " - The Mean Student Wait Time:     " << CalcMeanStudentWait() << endl;
+  oFile << " - The Median Student Wait Time:   " << CalcMedianStudentWait() << endl;
+  oFile << " - The Longest Student Wait Time:  " << LongestStudentWait() << endl;
   oFile << " - The Number of Students  " << endl;
-  oFile << "   Waiting More Than 10 Minutes:  " << NumStudentsOver10Minutes() << endl;
+  oFile << "   Waiting More Than 10 Minutes:   " << NumStudentsOver10Minutes() << endl;
 }
 void Registrar :: FindAndPrintWindowStats(ostream& oFile)
 {
   oFile << "Window Metrics:\n";
 
-  oFile << " - Number of Windows Simulated:   " << windowIdleTimes.GetSize() << endl;
-  oFile << " - The Mean Window Idle Time:     " << MeanWindowIdleTime() << endl;
-  oFile << " - The Longest Window Idle Time:  " << LongestWindowIdleTime() << endl;
+  oFile << " - Number of Windows Simulated:    " << windowIdleTimes.GetSize() << endl;
+  oFile << " - The Mean Window Idle Time:      " << CalcMeanWindowIdle() << endl;
+  oFile << " - Median Window Idle Time:        " << CalcMdeianWindowIdle() << endl;
+  oFile << " - The Longest Window Idle Time:   " << LongestWindowIdle() << endl;
   oFile << " - The Number of Windows" << endl;
-  oFile << "   Idle For More Than 5 Minutes:  " << NumWindowsOver5Minutes() << endl;
+  oFile << "   Idle For More Than 5 Minutes:   " << NumWindowsOver5Minutes() << endl;
 }
 
 /*****************************
@@ -288,7 +312,7 @@ int Registrar :: NumStudentsOver10Minutes()
 
   for(int i = 0; i < studentWaitTimes.GetSize(); ++i)
   {
-    if(studentWaitTimes.GetValueAtIndex(i))
+    if(studentWaitTimes.GetValueAtIndex(i) > 10)
     {
       ++numOver10;
     }
@@ -297,7 +321,7 @@ int Registrar :: NumStudentsOver10Minutes()
   return numOver10;
 }
 //window stat functions
-float Registrar :: MeanWindowIdleTime()
+float Registrar :: CalcMeanWindowIdle()
 {
   if(windowIdleTimes.GetSize() == 0)
   {
@@ -316,7 +340,30 @@ float Registrar :: MeanWindowIdleTime()
 
   return (float)sum / windowIdleTimes.GetSize();
 }
-int Registrar :: LongestWindowIdleTime()
+int Registrar :: CalcMdeianWindowIdle()
+{
+  //number is even
+  if(studentWaitTimes.GetSize() % 2 == 0)
+  {
+    int mid1 = windowIdleTimes.GetValueAtIndex((windowIdleTimes.GetSize() / 2));
+    int mid2 = windowIdleTimes.GetValueAtIndex((windowIdleTimes.GetSize() / 2) - 1);
+
+    if(mid1 < mid2)
+    {
+      return mid1;
+    }
+    else
+    {
+      return mid2;
+    }
+  }//if(windowIdleTimes.GetSize() % 2 == 0)
+  //number is odd
+  else
+  {
+    return windowIdleTimes.GetValueAtIndex((windowIdleTimes.GetSize() / 2));
+  }
+}
+int Registrar :: LongestWindowIdle()
 {
   if(windowIdleTimes.GetSize() == 0)
   {
@@ -346,7 +393,7 @@ int Registrar :: NumWindowsOver5Minutes()
 
   for(int i = 0; i < windowIdleTimes.GetSize(); ++i)
   {
-    if(windowIdleTimes.GetValueAtIndex(i) >= 5)
+    if(windowIdleTimes.GetValueAtIndex(i) > 5)
     {
       ++numWindowsOver5;
     }

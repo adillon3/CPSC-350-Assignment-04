@@ -12,7 +12,15 @@ values (even data set), the smaller value is taken, as directed to in class
 on 11/17/2020.  Wait time and idle times of 0 are included when finding the
 median.
 Means are computed only with values larger than 0.
+Only times that are more than 10 and 5 respectively counted, does not include
+times of 10 not 5
 
+Metrics output includes that which was specified in the Assignment Description,
+but also includes:
+-Total Time of Simulation
+-Number of Students
+-Number of Windows
+-Median of Window Idle Times
 
 Overloading operators
 https://docs.microsoft.com/en-us/cpp/standard-library/overloading-the-output-operator-for-your-own-classes?view=msvc-160
