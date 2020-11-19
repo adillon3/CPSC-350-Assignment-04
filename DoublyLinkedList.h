@@ -69,7 +69,6 @@ public:
       //adding new value
       tail -> data = newValue;
       ++size;
-      cerr << "SIZE ====----------------================:"  << size << endl;
     }
   }
   x DeleteBack()
@@ -235,9 +234,8 @@ public:
 
     return false;
   }
-  bool GetSize()
+  int GetSize()
   {
-    cerr << "SIZE IN GET SIZE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>: "  << size << endl;
     return size;
   }
   x GetValueAtIndex(int index)

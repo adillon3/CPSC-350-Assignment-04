@@ -36,7 +36,6 @@
 
   void Student :: DecrementWindowTime()
   {
-    cerr << "Decrementing Student Window Time: " << windowTime << endl;
     --windowTime;
   }
 

@@ -28,71 +28,8 @@ public:
   virtual void DisplayForwards(ostream& oFile) = 0;
   virtual void DisplayBackwards(ostream& oFile) = 0;
   virtual bool IsEmpty() = 0;
-  virtual bool GetSize() = 0;
+  virtual int GetSize() = 0;
   virtual x GetValueAtIndex(int index) = 0;
-
-
-  /*
-  LinkedListInterface()
-  {}
-  ~LinkedListInterface()
-  {}
-
-  void InsertFront(x newValue)
-  {
-    myList.InsertFront(newValue);
-  }
-  void InsertBack(x newValue)
-  {
-    myList.InsertBack(newValue);
-  }
-  x DeleteBack()
-  {
-    return myList.DeleteBack();
-  }
-  x DeleteFront()
-  {
-    return myList.DeleteFront();
-  }
-  x Delete(x key)
-  {
-    return myList.Delete(key);
-  }
-  DoublyLinkedListNode<x>* Search(x key)
-  {
-    return myList.Search(key);
-  }
-  DoublyLinkedListNode<x>* GetFront()
-  {
-    return myList.GetFront();
-  }
-  DoublyLinkedListNode<x>* GetBack()
-  {
-    return myList.GetBack();
-  }
-  void DisplayForwards(ostream& oFile)
-  {
-    myList.DisplayForwards(oFile);
-  }
-  void DisplayBackwards(ostream& oFile)
-  {
-    myList.DisplayBackwards(oFile);
-  }
-  bool IsEmpty()
-  {
-    myList.IsEmpty();
-  }
-  bool GetSize()
-  {
-    return myList.GetSize();
-  }
-  x GetValueAtIndex(int index)
-  {
-    return myList.GetValueAtIndex(index);
-  }
-
-
-*/
 
 };
 

@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
   cout << "\nWelcome to the...\n\n";
   cout << "************************\n";
   cout << "* REGISTRAR SIMULATION *\n";
-  cout << "************************\n\n\n";
+  cout << "************************\n\n";
 
   //Getting input if commandline is blank
   if(argc < 2)

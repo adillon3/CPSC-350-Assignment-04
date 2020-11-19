@@ -48,13 +48,9 @@ public:
   int   LongestWindowIdleTime();
   int   NumWindowsOver5Minutes();
 
-
-
-
-
 private:
   void MakeIdleList();
-  
+
   GenQueue<Student> studentQueue;
   Window* windowArray;
   int numWindows;
