@@ -14,3 +14,4 @@
 
  string GetFileName();
  void CheckFileNameValid(string& fileName);
+ bool GetYesOrNoInput(const string initialMessage);

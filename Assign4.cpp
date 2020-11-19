@@ -39,6 +39,41 @@
 
      inFile.close();
    } while(isNotValid);
+ }
 
+ bool GetYesOrNoInput(const string initialMessage)
+ {
+   char gameChoice;
+   bool invalidInput = true;
+
+   cout << initialMessage << endl;
+
+   do
+   {
+     cout << "Please enter either \'Y\' for \"Yes\" or \'N\' for \"No\": ";
+     cin.get(gameChoice);
+     cin.ignore(100000000, '\n');
+
+     gameChoice = toupper(gameChoice);
+
+     if(gameChoice == 'Y' || gameChoice == 'N')
+     {
+       invalidInput = false;
+     }
+     else
+     {
+       invalidInput = true;
+       cout << "Sorry, \'" << gameChoice << "\' is invalid.\n";
+     }
+   }while(invalidInput);
+
+   if(gameChoice == 'Y')
+   {
+     return true;
+   }
+   else
+   {
+     return false;
+   }
 
  }

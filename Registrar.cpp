@@ -26,7 +26,16 @@
  void Registrar :: RunSimulation(string fileName, ostream& oFile)
  {
    oFile << "Processing " << fileName << "...\n\n";
-   ProcessFile(fileName);
+
+   try
+   {
+     ProcessFile(fileName);
+   }
+   catch(char const* myString)
+   {
+     oFile << myString;
+     return;
+   }
 
    Student temp;
 
@@ -35,8 +44,6 @@
    //while there are students to process and or there are students at a window
    while(true) //while(!studentQueue.IsEmpty() ||  !AllWindowsAreIdle())
    {
-     string myString;
-
      RemoveStudentsFromWindows();
 
      while(!studentQueue.IsEmpty() && studentQueue.Peek().GetArrivalTime()  <= currentTime)
@@ -116,7 +123,7 @@ void Registrar :: ProcessFile(string fileName)
    {
      inFile.clear();
      inFile.ignore(100000000, '\n');
-     cout << "Sorry, file contains non numeric input.\n";
+     throw "Sorry, file not formatted correctly\n";
    }
 
    //getting number of studnts to arrive
@@ -125,7 +132,7 @@ void Registrar :: ProcessFile(string fileName)
    {
      inFile.clear();
      inFile.ignore(100000000, '\n');
-     cout << "Sorry, file contains non numeric input.\n";
+     throw "Sorry, file not formatted correctly\n";
    }
 
    //getting amount of time each student will spend at the window
@@ -137,7 +144,7 @@ void Registrar :: ProcessFile(string fileName)
      {
        inFile.clear();
        inFile.ignore(100000000, '\n');
-       cout << "Sorry, file contains non numeric input.\n";
+       throw "Sorry, file not formatted correctly\n";
      }
 
      studentQueue.Enqueue(Student(arrivalTime, studentWindowTime));
